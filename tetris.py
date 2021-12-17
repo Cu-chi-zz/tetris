@@ -1,5 +1,6 @@
 # Tetris NW
 # par Robert V. & Fedyna K.
+# Version modifiée par Cu-chi
 
 from ion import keydown
 from kandinsky import *
@@ -152,6 +153,7 @@ def collision(d,piece):
 
 def engine():
     global gl
+    pauseChecker = 0
     if reglages[2]:
         tetrominos = []
         for i in range(reglages[2]):
@@ -193,6 +195,20 @@ def engine():
                 if keydown(17) and not test_rot(tetromino,"a"):
                     sleep(0.160)
                     tourner(tetromino,"a")
+                if keydown(18) and pauseChecker == 0:
+                    draw_string("P",284-5*len(str(gl[0])),110,(255,255,255),(120,120,120))
+                    draw_string("P",284-5*len(str(gl[1])),158,os)
+                    sleep(0.100)
+                    while True: 
+                        sleep(0.100)
+                        if keydown(18):
+                            break
+                    pauseChecker = 2
+
+            if pauseChecker:              
+                if pauseChecker > 0: 
+                    pauseChecker = pauseChecker - 1
+
             if collision(2,tetromino):
                 break
             score(i=1)
